@@ -448,3 +448,16 @@ function exportFullBillToExcel(billData) {
   // Save File
   XLSX.writeFile(wb, "Full_Bill.xlsx");
 }
+
+
+function printBill() {
+  const printContents = document.getElementById('printSection').innerHTML;
+  const originalContents = document.body.innerHTML;
+
+  document.body.innerHTML = printContents;
+  window.print();
+  document.body.innerHTML = originalContents;
+
+  // Optional: reload to restore JS functionality
+  location.reload(); 
+}
