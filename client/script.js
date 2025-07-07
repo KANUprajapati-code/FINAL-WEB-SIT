@@ -174,6 +174,15 @@ async function fetchBilling() {
 
 // ====== Utility Buttons ======
 function printBill() {
+   const printContents = document.getElementById('printSection').innerHTML;
+  const originalContents = document.body.innerHTML;
+
+  document.body.innerHTML = printContents;
+ 
+  document.body.innerHTML = originalContents;
+
+  // Optional: reload to restore JS functionality
+
   window.print();
 }
 
@@ -308,13 +317,56 @@ function updateBillMetaTableAndPreview(item) {
 let previewItems = [];
 let totalPreviewPrice = 0;
 
+// function itempreviu() {
+//   const addItemBtn = document.getElementById('additem');
+
+//   addItemBtn.addEventListener('click', () => {
+//     const item = document.getElementById('billitem').value;
+//     const quantity = document.getElementById('partquntayti').value;
+//     const price = parseFloat(document.getElementById('price').value);
+
+//     if (!item || !quantity || isNaN(price)) {
+//       alert("Please enter all fields correctly!");
+//       return;
+//     }
+
+//     const itemObj = { item, quantity, price };
+//     previewItems.push(itemObj); // ✅ Store for export/save
+
+//     // Add row in preview
+//     const tbody = document.getElementById('itemPreviewBody');
+//     const newRow = document.createElement('tr');
+//     newRow.innerHTML = `
+//       <td>${item}</td>
+//       <td>${quantity}</td>
+//       <td>${price}</td>
+//     `;
+//     tbody.appendChild(newRow);
+
+//     // Update total
+//     totalPreviewPrice += price;
+//     document.getElementById('tdPrice').textContent = totalPreviewPrice.toFixed(2);
+//     document.getElementById('prevPrice').textContent = totalPreviewPrice.toFixed(2);
+
+    
+//     document.getElementById('billitem').value = "";
+//     document.getElementById('partquntayti').value = "";
+//     document.getElementById('price').value = "";
+//   });
+// }
+// itempreviu();
+
 function itempreviu() {
   const addItemBtn = document.getElementById('additem');
 
   addItemBtn.addEventListener('click', () => {
-    const item = document.getElementById('billitem').value;
-    const quantity = document.getElementById('partquntayti').value;
-    const price = parseFloat(document.getElementById('price').value);
+    const itemInput = document.getElementById('billitem');
+    const quantityInput = document.getElementById('partquntayti');
+    const priceInput = document.getElementById('price');
+
+    const item = itemInput.value.trim();
+    const quantity = quantityInput.value.trim();
+    const price = parseFloat(priceInput.value.trim());
 
     if (!item || !quantity || isNaN(price)) {
       alert("Please enter all fields correctly!");
@@ -339,13 +391,13 @@ function itempreviu() {
     document.getElementById('tdPrice').textContent = totalPreviewPrice.toFixed(2);
     document.getElementById('prevPrice').textContent = totalPreviewPrice.toFixed(2);
 
-    // Clear
-    document.getElementById('billitem').value = '';
-    document.getElementById('partquntayti').value = '';
-    document.getElementById('price').value = '';
+    // ✅ Clear inputs
+    itemInput.value = "";
+    quantityInput.value = "";
+    priceInput.value = "";
   });
 }
-itempreviu();
+ itempreviu();
 
 function finalizeBill() {
   if (previewItems.length === 0) {
@@ -450,14 +502,4 @@ function exportFullBillToExcel(billData) {
 }
 
 
-function printBill() {
-  const printContents = document.getElementById('printSection').innerHTML;
-  const originalContents = document.body.innerHTML;
 
-  document.body.innerHTML = printContents;
-  window.print();
-  document.body.innerHTML = originalContents;
-
-  // Optional: reload to restore JS functionality
-  location.reload(); 
-}

@@ -157,3 +157,27 @@ table {
     display: flex;
     justify-content: space-between;
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #printSection, #printSection * {
+    visibility: visible;
+  }
+
+  #printSection {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    padding: 20px;
+  }
+}
+
+#CHENG{
+  width:1200px;
+  margin: auto;
+}
