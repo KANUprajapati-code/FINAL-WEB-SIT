@@ -152,3 +152,8 @@ table {
   border: 1px solid #ddd;
   padding: 8px;
 }
+.CARD
+{
+    display: flex;
+    justify-content: space-between;
+}
