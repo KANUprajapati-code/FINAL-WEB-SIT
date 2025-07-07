@@ -503,3 +503,41 @@ function exportFullBillToExcel(billData) {
 
 
 
+async function searchBilling() {
+  const query = document.getElementById('searchInput').value.trim().toLowerCase();
+
+  if (!query) {
+    fetchBilling(); // Show all if input is empty
+    return;
+  }
+
+  const res = await fetch('/api/billing');
+  const data = await res.json();
+
+  const filtered = data.filter(item =>
+    item.vehicleNumber.toLowerCase().includes(query) ||
+    item.clientName.toLowerCase().includes(query)
+  );
+
+  const tbody = document.getElementById('billingTableBody');
+  tbody.innerHTML = '';
+  filtered.forEach(item => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${item.item}</td>
+        <td>${item.qty}</td>
+        <td>${item.price}</td>
+        <td>${item.date}</td>
+        <td>${item.vehicleModel}</td>
+        <td>${item.vehicleNumber}</td>
+        <td>${item.clientName}</td>
+        <td>${item.clientMobile}</td>
+      </tr>
+    `;
+  });
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  fetchBilling();
+}
